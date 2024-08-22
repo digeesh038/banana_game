@@ -5,7 +5,7 @@ export default class TreeManager {
   }
 
   createTrees() {
-    const treeWidth = 250;
+    const treeWidth = 207;
     const treeHeight = window.innerHeight;
 
     // Create the left tree
@@ -27,9 +27,9 @@ export default class TreeManager {
     // Create the close image at the top of the right tree
     this.closeImage = this.scene.add
       .image(window.innerWidth - 110, 10, "close")
-      .setOrigin(-0.5, -0.5)
+      .setOrigin(-0.8, -0.5)
       .setDepth(4)
-      .setDisplaySize(60, 60);
+      .setDisplaySize(50, 50);
 
     // Make the close image interactive and change cursor to pointer
     this.closeImage.setInteractive();
@@ -46,8 +46,8 @@ export default class TreeManager {
     // Create the monkeyhead image at the top of the left tree
     this.scene.add
       .image(50, 10, "monkeyhead")
-      .setOrigin(0.4, 0)
+      .setOrigin(0.6, 0)
       .setDepth(4)
-      .setDisplaySize(100, 105);
+      .setDisplaySize(80, 90);
   }
 }

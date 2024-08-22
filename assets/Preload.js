@@ -47,5 +47,6 @@ export default class AssetLoader {
     this.scene.load.image("monkey", "game sprites/MonkE/frame.svg");
     this.scene.load.image("banana", "UI/dccm_8pbl_230109-ai 1.png");
     this.scene.load.image("monkeyProgress", "game sprites/MonkE/frame4.png");
+    this.scene.load.image("coin","game sprites/carromstriker.png");
     }
 }

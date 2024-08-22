@@ -7,12 +7,12 @@ export default class HealthBarManager {
     }
 
     initializeHealthBar() {
-        this.healthBarWidth = 600;
-        this.healthBarHeight = 30;
-        this.healthBarMarginRight = 800;
+        this.healthBarWidth = 210;
+        this.healthBarHeight = 25;
+        this.healthBarMarginRight =110;
         this.healthBarMarginTop = 110;
         this.borderRadius = 15;
-        this.borderRadius_1 = 10;
+        this.borderRadius_1 = 8;
         this.healthBarBackground = this.scene.add.graphics();
         this.healthBarMain = this.scene.add.graphics();
         this.healthBarInner = this.scene.add.graphics();

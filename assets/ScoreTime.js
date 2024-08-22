@@ -8,27 +8,27 @@ class UserInterfaceManager {
     }
 
     createUI() {
-        const marginRight = 600;
-        const marginLeft = 250;
+        const marginRight = 260;
+        const marginLeft = 10;
 
         this.timerText = this.scene.add
             .text(
-                window.innerWidth - marginRight - 750 + marginLeft,
+                window.innerWidth - marginRight - 10 + marginLeft,
                 40,
                 `Time: ${this.scene.timer}`,
                 {
-                    fontSize: "40px",
+                    fontSize: "20px",
                     fill: "#fff",
                     fontFamily: "Arial",
                     fontWeight: "bolder",
-                    padding: { left: 0, right: 10, top: 17, bottom: 10 },
+                    padding: { left: 50, right: 2, top: 35, bottom: 10 },
                 }
             )
             .setDepth(4);
 
         this.scoreText = this.scene.add
-            .text(window.innerWidth - 620 - 750, 57, "Score: 0", {
-                fontSize: "40px",
+            .text(window.innerWidth - 300 - 10, 74, "Score: 0", {
+                fontSize: "20px",
                 fill: "#fff",
                 fontFamily: "Arial",
                 fontWeight: "bold",

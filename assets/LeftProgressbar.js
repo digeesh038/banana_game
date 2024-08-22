@@ -3,12 +3,12 @@ export default class ProgressBarManager {
         this.scene = scene;
         this.maxTime = maxTime;
         this.startPositionY = startPositionY;
-        this.progressBarWidth = 80;
-        this.progressBarHeight = 680;
-        this.progressBarX = 18;
+        this.progressBarWidth = 65;
+        this.progressBarHeight = 750;
+        this.progressBarX = 5;
         this.progressBarY = scene.cameras.main.height - this.progressBarHeight - 50;
-        this.borderRadius = 40;
-        this.monkeyImageHeight = 160;
+        this.borderRadius = 32;
+        this.monkeyImageHeight = 135;
 
         this.createVerticalProgressBar();
     }
@@ -26,7 +26,7 @@ export default class ProgressBarManager {
         );
         this.scene.monkeyImage.setOrigin(0.5, 1); // Set origin to center-bottom
         this.scene.monkeyImage.setDepth(6);
-        this.scene.monkeyImage.displayWidth = 80; // Set the width of the monkey image
+        this.scene.monkeyImage.displayWidth = 60; // Set the width of the monkey image
         this.scene.monkeyImage.displayHeight = this.monkeyImageHeight; // Set the height of the monkey image
 
         // Draw the progress bar background

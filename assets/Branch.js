@@ -6,27 +6,30 @@ export default class BranchManager {
         this.branchSpacing = 1200; // Adjust the branch spacing between branches
         this.spawnLeft = true;
 
+        // Detect if the game is running on a mobile device
+        this.isMobile = window.innerWidth <= 768; // Example breakpoint for mobile
+
         // Define margins
-        this.marginLeft = 130; // Adjust as needed
-        this.marginRight = 200;
+        this.marginLeft = 0; // Adjust as needed
+        this.marginRight = 0;
 
         // Define tree width (assuming this is fixed for both sides)
-        this.treeWidth = 840; 
+        this.treeWidth = this.isMobile ? 420 : 840; // Adjust for mobile
 
- // Define branch sizes
+        // Define branch sizes (scaled down for mobile)
         this.largerBranchSizes = {
             left: {
-                branch1: { width: 800, height: 460 },
-                branch2: { width: 645, height: 460 },
-                branch3: { width: 645, height: 460 },
-                width: 800, height: 460
+                branch1: this.getBranchSize(800, 460),
+                branch2: this.getBranchSize(645, 460),
+                branch3: this.getBranchSize(645, 460),
+                width: this.getBranchSize(800, 460)
             },
             right: {
-                branch4: { width: 770, height: 400 },
-                branch5: { width: 800, height: 480 },
-                branch6: { width: 800, height: 480 },
-                branch7: { width: 800, height: 118 },
-                branch8: { width: 800, height: 118 }
+                branch4: this.getBranchSize(770, 400),
+                branch5: this.getBranchSize(800, 480),
+                branch6: this.getBranchSize(800, 480),
+                branch7: this.getBranchSize(800, 118),
+                branch8: this.getBranchSize(800, 118)
             }
         };
 
@@ -44,6 +47,12 @@ export default class BranchManager {
             callback: () => this.spawnBranch(),
             loop: true,
         });
+    }
+
+    // Helper function to scale branch sizes for mobile
+    getBranchSize(width, height) {
+        const scale = this.isMobile ? 0.5 : 1; // Scale down by 50% for mobile
+        return { width: width * scale, height: height * scale };
     }
 
     initializeBranches() {
@@ -89,6 +98,7 @@ export default class BranchManager {
             return false;
         });
     }
+
     spawnBranch() {
         let branchX, branchY, branchImageKey, branchSize;
     
@@ -111,7 +121,15 @@ export default class BranchManager {
         branch.setDisplaySize(branchSize.width, branchSize.height);
         branch.setOrigin(0, 0);
     
-        this.scene.matter.add.gameObject(branch).setSensor(true);
+        // Add Matter.js physics body with the same size as the sprite
+        const branchBody = this.scene.matter.add.gameObject(branch, {
+            shape: {
+                type: 'rectangle',
+                width: branch.displayWidth,
+                height: branch.displayHeight
+            }
+        });
+        branchBody.setSensor(true); // Set the sensor property to true
     
         this.branches.push(branch);
     
