@@ -48,7 +48,6 @@ export default class HealthBarManager {
 
     decreaseHealth(amount) {
         this.health -= amount;
-        console.log(`Health decreased by ${amount}. Current health: ${this.health}`);
         this.updateHealthBar();
 
         if (this.health <= 0) {
