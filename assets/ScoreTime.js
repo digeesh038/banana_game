@@ -8,32 +8,47 @@ class UserInterfaceManager {
     }
 
     createUI() {
-        const marginRight = 260;
-        const marginLeft = 10;
+        // Get the viewport size using Phaser's scale manager
+        const viewportWidth = this.scene.scale.width;
+        const viewportHeight = this.scene.scale.height;
+
+        // Define margins from the left edge
+        const leftMargin = viewportWidth * 0.05; // 5% of the viewport width
+
+        // Adjust text positioning and font size dynamically
+        const timerFontSize = Math.max(20, viewportWidth / 40);
+        const scoreFontSize = Math.max(20, viewportWidth / 40);
 
         this.timerText = this.scene.add
             .text(
-                window.innerWidth - marginRight - 10 + marginLeft,
-                40,
+                leftMargin,                // Position from the left
+                20,                        // Adjust vertically if needed
                 `Time: ${this.scene.timer}`,
                 {
-                    fontSize: "20px",
+                    fontSize: `${timerFontSize}px`,
                     fill: "#fff",
                     fontFamily: "Arial",
                     fontWeight: "bolder",
-                    padding: { left: 50, right: 2, top: 35, bottom: 10 },
+                    padding: { left: 10, right: 2, top: 40, bottom: 10 },
                 }
             )
-            .setDepth(4);
+            .setOrigin(-2, 0) // Left align text
+            .setDepth(10);
 
         this.scoreText = this.scene.add
-            .text(window.innerWidth - 300 - 10, 74, "Score: 0", {
-                fontSize: "20px",
-                fill: "#fff",
-                fontFamily: "Arial",
-                fontWeight: "bold",
-            })
-            .setDepth(4);
+            .text(
+                leftMargin,                // Position from the left
+                60,                        // Adjust vertically if needed
+                "Score: 0",
+                {
+                    fontSize: `${scoreFontSize}px`,
+                    fill: "#fff",
+                    fontFamily: "Arial",
+                    fontWeight: "bold",
+                }
+            )
+            .setOrigin(-1, 0) // Left align text
+            .setDepth(10);
     }
 
     updateTimer(timer) {
@@ -49,17 +64,20 @@ class UserInterfaceManager {
     }
 
     showGameOver() {
+        const viewportWidth = this.scene.scale.width;
+        const viewportHeight = this.scene.scale.height;
+
         const overlay = this.scene.add.graphics();
         overlay.fillStyle(0x000000, 0.9); // Black with 90% opacity
-        overlay.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        overlay.fillRect(0, 0, viewportWidth, viewportHeight);
         overlay.setDepth(19); // Ensure the overlay is below the text
 
         this.gameOverText = this.scene.add.text(
-            this.scene.cameras.main.centerX,
-            this.scene.cameras.main.centerY,
-            "Game Over" ,
+            viewportWidth / 2,
+            viewportHeight / 2,
+            "Game Over",
             {
-                fontSize: "74px",
+                fontSize: `${Math.max(50, viewportWidth / 15)}px`,
                 fill: "#FFFFFF",
                 fontFamily: "Arial",
                 fontWeight: "bold",
@@ -78,13 +96,16 @@ class UserInterfaceManager {
     }
 
     showFinalScore(score) {
+        const viewportWidth = this.scene.scale.width;
+        const viewportHeight = this.scene.scale.height;
+
         this.finalScoreText = this.scene.add
             .text(
-                window.innerWidth / 2,
-                window.innerHeight / 2 + 50,
+                viewportWidth / 2,
+                viewportHeight / 2 + 50,
                 `Score: ${score}`,
                 {
-                    fontSize: "64px",
+                    fontSize: `${Math.max(32, viewportWidth / 20)}px`,
                     fill: "#FFFFFF",
                     fontFamily: "Arial",
                     fontWeight: "bold",

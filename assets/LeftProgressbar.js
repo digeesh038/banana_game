@@ -4,7 +4,7 @@ export default class ProgressBarManager {
         this.maxTime = maxTime;
         this.startPositionY = startPositionY;
         this.progressBarWidth = 65;
-        this.progressBarHeight = 750;
+        this.progressBarHeight = 710;
         this.progressBarX = 5;
         this.progressBarY = scene.cameras.main.height - this.progressBarHeight - 50;
         this.borderRadius = 32;

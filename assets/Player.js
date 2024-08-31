@@ -1,17 +1,33 @@
 export default class PlayerManager {
   constructor(scene) {
     this.scene = scene;
-    this.playerHeight = 230;
-    this.playerWidth = 120;
+    this.initializePlayerDimensions();
     this.createPlayer();
     this.createAnimations();
     this.initializeControls();
   }
 
+  initializePlayerDimensions() {
+    // Define dimensions as percentages of viewport size
+    const isMobile = window.innerWidth <= 800; // Consider this threshold for mobile
+    const baseWidth = 120;
+    const baseHeight = 230;
+
+    if (isMobile) {
+      // Mobile dimensions
+      this.playerWidth = baseWidth;
+      this.playerHeight = baseHeight;
+    } else {
+      // Laptop dimensions (scaled up)
+      this.playerWidth = baseWidth * 1.5; // Increase size for laptop
+      this.playerHeight = baseHeight * 1.5; // Increase size for laptop
+    }
+  }
+
   createPlayer() {
     this.player = this.scene.matter.add.sprite(
-      window.innerWidth / 2,
-      window.innerHeight / 2,
+      this.scene.scale.width / 2,
+      this.scene.scale.height / 2,
       "player1"
     );
     this.player.setDisplaySize(this.playerWidth, this.playerHeight);
@@ -59,8 +75,8 @@ export default class PlayerManager {
   }
 
   movePlayerTo(pointerX) {
-    const leftLimit = 110;
-    const rightLimit = window.innerWidth - 110;
+    const leftLimit = this.playerWidth / 2;
+    const rightLimit = this.scene.scale.width - this.playerWidth / 2;
 
     // Move player directly to the pointer position
     if (pointerX < leftLimit) {
@@ -83,8 +99,8 @@ export default class PlayerManager {
     }
 
     // Ensure the player does not move outside the space between the trees
-    const leftLimit = 110;
-    const rightLimit = window.innerWidth - 110;
+    const leftLimit = this.playerWidth / 2;
+    const rightLimit = this.scene.scale.width - this.playerWidth / 2;
     if (this.player.x < leftLimit) {
       this.player.x = leftLimit;
     } else if (this.player.x > rightLimit) {

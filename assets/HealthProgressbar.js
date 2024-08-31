@@ -7,16 +7,37 @@ export default class HealthBarManager {
     }
 
     initializeHealthBar() {
-        this.healthBarWidth = 210;
-        this.healthBarHeight = 25;
-        this.healthBarMarginRight =110;
-        this.healthBarMarginTop = 110;
-        this.borderRadius = 15;
-        this.borderRadius_1 = 8;
+        // Get viewport dimensions
+        const viewportWidth = this.scene.scale.width;
+        const viewportHeight = this.scene.scale.height;
+
+        // Determine if the screen size is considered "mobile" or "laptop"
+        // Adjust the threshold based on your specific needs
+        const isMobile = viewportWidth <= 768; // Example threshold for mobile devices
+
+        // Define health bar dimensions and margins based on the screen size
+        if (isMobile) {
+            this.healthBarWidth = viewportWidth * 0.5; // Adjust for mobile
+            this.healthBarHeight = viewportHeight * 0.03; // Consistent size on mobile
+            this.healthBarMarginLeft = viewportWidth * 0.2; // Margin from the left for mobile
+            this.healthBarMarginTop = viewportHeight * 0.1; // Margin from the top for mobile
+        } else {
+            this.healthBarWidth = viewportWidth * 0.35; // Adjust for larger screens (laptop)
+            this.healthBarHeight = viewportHeight * 0.03; // Consistent height
+            this.healthBarMarginLeft = viewportWidth * 0.06; // Margin from the left for larger screens
+            this.healthBarMarginTop = viewportHeight * 0.13; // Margin from the top for larger screens
+        }
+
+        // Border radius settings
+        this.borderRadius = this.healthBarHeight * 0.5; // Half of height for rounded corners
+        this.borderRadius_1 = this.borderRadius * 0.5; // Smaller radius for inner bar
+
+        // Create the graphics objects
         this.healthBarBackground = this.scene.add.graphics();
         this.healthBarMain = this.scene.add.graphics();
         this.healthBarInner = this.scene.add.graphics();
 
+        // Set depth to ensure visibility
         this.healthBarBackground.setDepth(4);
         this.healthBarMain.setDepth(4);
         this.healthBarInner.setDepth(4);
@@ -29,7 +50,8 @@ export default class HealthBarManager {
         this.healthBarMain.clear();
         this.healthBarInner.clear();
 
-        const barX = this.scene.cameras.main.width - this.healthBarWidth - this.healthBarMarginRight;
+        // Calculate position based on viewport size
+        const barX = this.healthBarMarginLeft;
         const barY = this.healthBarMarginTop;
 
         // Background bar
@@ -59,45 +81,45 @@ export default class HealthBarManager {
         // Create a semi-transparent overlay
         const overlay = this.scene.add.graphics();
         overlay.fillStyle(0x000000, 0.9); // Black with 90% opacity
-        overlay.fillRect(0, 0, this.scene.cameras.main.width, this.scene.cameras.main.height);
+        overlay.fillRect(0, 0, this.scene.scale.width, this.scene.scale.height);
         overlay.setDepth(19); // Ensure the overlay is below the text
-    
+
         // Change the background color to red
         this.scene.cameras.main.backgroundColor.setTo(0xFF0000); // Set background to red
-    
+
         // Create game over text
         this.gameOverText = this.scene.add.text(
-            this.scene.cameras.main.centerX,
-            this.scene.cameras.main.centerY,
+            this.scene.scale.width / 2,
+            this.scene.scale.height / 2,
             "Game Over",
             {
-                fontSize: "74px",
+                fontSize: `${Math.max(40, this.scene.scale.width / 20)}px`, // Responsive font size
                 fill: "#FFFFFF",
                 fontFamily: "Arial",
                 fontWeight: "bold",
             }
         );
         this.gameOverText.setOrigin(0.5).setDepth(30);
-    
+
         // Add tween to fade out the text
         this.scene.tweens.add({
             targets: this.gameOverText,
             alpha: 1,
+            duration: 1000,
             onComplete: () => {
                 this.showFinalScore(this.scene.score); // Pass the score to showFinalScore method
                 this.scene.scene.pause(); // Pause the scene
             },
         });
     }
-    
 
     showFinalScore(score) {
         this.finalScoreText = this.scene.add.text(
-            this.scene.cameras.main.centerX,
-            this.scene.cameras.main.centerY + 80,
+            this.scene.scale.width / 2,
+            this.scene.scale.height / 2 + 80,
             `Score: ${score}`,
             {
-                fontSize: "64px",
+                fontSize: `${Math.max(28, this.scene.scale.width / 25)}px`, // Responsive font size
                 fill: "#FFFFFF",
                 fontFamily: "Arial",
                 fontWeight: "bold",
