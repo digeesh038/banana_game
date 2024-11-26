@@ -14,8 +14,8 @@ import CollisionBranch from "./assets/CollisionBranch.js";
 class GameScene extends Phaser.Scene {
     constructor() {
         super({ key: 'GameScene' });
-        this.timer = 4;
-        this.maxTime = 4;
+        this.timer = 3;
+        this.maxTime = 3;
         this.elapsedTime = 0;
         this.score = 0;
         this.maxHealth = 5;
