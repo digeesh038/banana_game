@@ -19,7 +19,8 @@ class UserInterfaceManager {
 
     // Method to create a reusable button
     createButton(x, y, texture, width, height, depth, onClick) {
-        const button = this.scene.add.image(x, y, texture)
+        const button = this.scene.add
+            .image(x, y, texture)
             .setOrigin(0.5)
             .setDepth(depth)
             .setDisplaySize(width, height)
@@ -34,7 +35,7 @@ class UserInterfaceManager {
         });
 
         // Default onClick if none is provided
-        const handleClick = typeof onClick === 'function' ? onClick : () => {};
+        const handleClick = typeof onClick === "function" ? onClick : () => { };
 
         // Trigger the callback function on click
         button.on("pointerdown", handleClick);
@@ -43,9 +44,19 @@ class UserInterfaceManager {
     }
 
     // Method to create a button with text
-    createButtonWithText(x, y, texture, buttonText, width, height, depth, onClick) {
+    createButtonWithText(
+        x,
+        y,
+        texture,
+        buttonText,
+        width,
+        height,
+        depth,
+        onClick
+    ) {
         // Create the button image
-        const button = this.scene.add.image(x, y, texture)
+        const button = this.scene.add
+            .image(x, y, texture)
             .setOrigin(0.5)
             .setDepth(depth)
             .setDisplaySize(width, height)
@@ -60,23 +71,25 @@ class UserInterfaceManager {
         });
 
         // Default onClick if none is provided
-        const handleClick = typeof onClick === 'function' ? onClick : () => {};
+        const handleClick = typeof onClick === "function" ? onClick : () => { };
 
         // Trigger the callback function on click
         button.on("pointerdown", handleClick);
 
         // Add text to the button
-        const text = this.scene.add.text(
-            x,                 // Centered horizontally on the button
-            y,                 // Centered vertically
-            buttonText,
-            {
-                fontSize: `${Math.min(width, height) / 2}px`, // Text size relative to button size
-                fill: "#FFFFFF",
-                fontFamily: "Arial",
-                fontWeight: "bold",
-            }
-        ).setOrigin(0.5);
+        const text = this.scene.add
+            .text(
+                x, // Centered horizontally on the button
+                y, // Centered vertically
+                buttonText,
+                {
+                    fontSize: `${Math.min(width, height) / 2}px`, // Text size relative to button size
+                    fill: "#FFFFFF",
+                    fontFamily: "Arial",
+                    fontWeight: "bold",
+                }
+            )
+            .setOrigin(0.5);
 
         // Set the text depth to appear above the button
         this.setElementDepth(text, depth + 1);
@@ -91,51 +104,57 @@ class UserInterfaceManager {
         const isTablet = viewportWidth <= 1024;
 
         const leftMargin = isMobile ? viewportWidth * 0.05 : viewportWidth * 0.1;
-        const timerFontSize = isMobile ? Math.max(18, viewportWidth / 40) : Math.max(24, viewportWidth / 40);
-        const scoreFontSize = isMobile ? Math.max(18, viewportWidth / 40) : Math.max(24, viewportWidth / 40);
+        const timerFontSize = isMobile
+            ? Math.max(18, viewportWidth / 40)
+            : Math.max(24, viewportWidth / 40);
+        const scoreFontSize = isMobile
+            ? Math.max(18, viewportWidth / 40)
+            : Math.max(24, viewportWidth / 40);
 
         // Timer text
-        this.timerText = this.scene.add.text(
-            leftMargin,
-            isMobile ? viewportHeight * 0.05 : 20,
-            `Time: ${this.scene.timer}`,
-            {
-                fontSize: `${timerFontSize}px`,
-                fill: "#fff",
-                fontFamily: "Arial",
-                fontWeight: "bolder",
-                padding: { left: isMobile ? 190 : 250, right: 2, top: 26, bottom: 10 },
-            }
-        ).setOrigin(0, 0);
+        this.timerText = this.scene.add
+            .text(
+                leftMargin,
+                isMobile ? viewportHeight * 0.05 : 20,
+                `Time: ${this.scene.timer}`,
+                {
+                    fontSize: `${timerFontSize}px`,
+                    fill: "#fff",
+                    fontFamily: "Arial",
+                    fontWeight: "bolder",
+                    padding: {
+                        left: isMobile ? 190 : 250,
+                        right: 2,
+                        top: 26,
+                        bottom: 10,
+                    },
+                }
+            )
+            .setOrigin(0, 0);
         this.setElementDepth(this.timerText, 1);
 
         // Score text
-        let scoreYPosition = isMobile ? (viewportHeight * 0.05 + timerFontSize * 1.5) : 45;
-        this.scoreText = this.scene.add.text(
-            leftMargin,
-            scoreYPosition,
-            "Score: 0",
-            {
+        let scoreYPosition = isMobile
+            ? viewportHeight * 0.05 + timerFontSize * 1.5
+            : 45;
+        this.scoreText = this.scene.add
+            .text(leftMargin, scoreYPosition, "Score: 0", {
                 fontSize: `${scoreFontSize}px`,
                 fill: "#fff",
                 fontFamily: "Arial",
                 fontWeight: "bold",
                 padding: { left: isMobile ? 90 : 30, right: 2, top: 0, bottom: 10 },
-            }
-        ).setOrigin(0, 0);
+            })
+            .setOrigin(0, 0);
         this.setElementDepth(this.scoreText, 2);
 
         // Restart button (hidden initially)
         const closeButtonWidth = isMobile ? 80 : 120;
         const closeButtonHeight = isMobile ? 80 : 120;
-
         const marginRight = isMobile ? 123 : 660;
         const marginBottom = isMobile ? 210 : 30;
-
         const closeButtonX = viewportWidth - closeButtonWidth - marginRight;
         const closeButtonY = viewportHeight - closeButtonHeight - marginBottom;
-
-        // Create the close button but keep it invisible initially
         this.closeButton = this.createButtonWithText(
             closeButtonX,
             closeButtonY,
@@ -143,39 +162,36 @@ class UserInterfaceManager {
             " ",
             closeButtonWidth,
             closeButtonHeight,
-            50, 
-            () => {} // Default empty function if onClick isn't provided
+            50,
         );
 
-        this.closeButton.button.setVisible(false); // Hide the button initially
+        this.closeButton.button.setVisible(false);
     }
-
     // Function to create and show the Game Over screen
     showGameOver() {
         const viewportWidth = this.scene.scale.width;
         const viewportHeight = this.scene.scale.height;
         const isMobile = viewportWidth <= 768;
-// Background overlay
-const overlay = this.scene.add.graphics();
-overlay.fillStyle(0x000000, 0.9);
-overlay.fillRect(0, 0, viewportWidth, viewportHeight);
+        // Background overlay
+        const overlay = this.scene.add.graphics();
+        overlay.fillStyle(0x000000, 0.9);
+        overlay.fillRect(0, 0, viewportWidth, viewportHeight);
 
-// Set depth for the overlay
-const overlayDepth = this.setElementDepth(overlay, 18);  // Depth value set to 18
+        // Set depth for the overlay
+        const overlayDepth = this.setElementDepth(overlay, 18); // Depth value set to 18
 
         // Game Over text
-        const gameOverFontSize = isMobile ? Math.max(24, viewportWidth / 15) : Math.max(50, viewportWidth / 15);
-        this.gameOverText = this.scene.add.text(
-            viewportWidth / 2,
-            viewportHeight / 2 - 50,
-            "Game Over",
-            {
+        const gameOverFontSize = isMobile
+            ? Math.max(24, viewportWidth / 15)
+            : Math.max(50, viewportWidth / 15);
+        this.gameOverText = this.scene.add
+            .text(viewportWidth / 2, viewportHeight / 2 - 50, "Game Over", {
                 fontSize: `${gameOverFontSize}px`,
                 fill: "#FFFFFF",
                 fontFamily: "Arial",
                 fontWeight: "bold",
-            }
-        ).setOrigin(0.5);
+            })
+            .setOrigin(0.5);
         this.setElementDepth(this.gameOverText, 39);
 
         // Final score
@@ -202,17 +218,14 @@ const overlayDepth = this.setElementDepth(overlay, 18);  // Depth value set to 1
         const viewportHeight = this.scene.scale.height;
 
         const finalScoreFontSize = Math.max(24, viewportWidth / 20);
-        this.finalScoreText = this.scene.add.text(
-            viewportWidth / 2,
-            viewportHeight / 2 + 50,
-            `Score: ${score}`,
-            {
+        this.finalScoreText = this.scene.add
+            .text(viewportWidth / 2, viewportHeight / 2 + 50, `Score: ${score}`, {
                 fontSize: `${finalScoreFontSize}px`,
                 fill: "#FFFFFF",
                 fontFamily: "Arial",
                 fontWeight: "bold",
-            }
-        ).setOrigin(0.5);
+            })
+            .setOrigin(0.5);
         this.setElementDepth(this.finalScoreText, 39);
     }
 }

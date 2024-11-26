@@ -1,31 +1,30 @@
 export default class HealthBarManager {
     constructor(scene) {
         this.scene = scene;
-        this.maxHealth = 10;
+        this.maxHealth = 1;
         this.health = this.maxHealth;
         this.initializeHealthBar();
     }
 
     initializeHealthBar() {
         // Get viewport dimensions
-        const viewportWidth = this.scene.scale.width;
-        const viewportHeight = this.scene.scale.height;
+        this.viewportWidth = this.scene.scale.width;
+        this.viewportHeight = this.scene.scale.height;
 
         // Determine if the screen size is considered "mobile" or "laptop"
-        // Adjust the threshold based on your specific needs
-        const isMobile = viewportWidth <= 768; // Example threshold for mobile devices
+        this.isMobile = this.viewportWidth <= 768; // Example threshold for mobile devices
 
         // Define health bar dimensions and margins based on the screen size
-        if (isMobile) {
-            this.healthBarWidth = viewportWidth * 0.5; // Adjust for mobile
-            this.healthBarHeight = viewportHeight * 0.03; // Consistent size on mobile
-            this.healthBarMarginLeft = viewportWidth * 0.2; // Margin from the left for mobile
-            this.healthBarMarginTop = viewportHeight * 0.1; // Margin from the top for mobile
+        if (this.isMobile) {
+            this.healthBarWidth = this.viewportWidth * 0.5; // Adjust for mobile
+            this.healthBarHeight = this.viewportHeight * 0.03; // Consistent size on mobile
+            this.healthBarMarginLeft = this.viewportWidth * 0.2; // Margin from the left for mobile
+            this.healthBarMarginTop = this.viewportHeight * 0.1; // Margin from the top for mobile
         } else {
-            this.healthBarWidth = viewportWidth * 0.35; // Adjust for larger screens (laptop)
-            this.healthBarHeight = viewportHeight * 0.03; // Consistent height
-            this.healthBarMarginLeft = viewportWidth * 0.06; // Margin from the left for larger screens
-            this.healthBarMarginTop = viewportHeight * 0.13; // Margin from the top for larger screens
+            this.healthBarWidth = this.viewportWidth * 0.35; // Adjust for larger screens (laptop)
+            this.healthBarHeight = this.viewportHeight * 0.03; // Consistent height
+            this.healthBarMarginLeft = this.viewportWidth * 0.06; // Margin from the left for larger screens
+            this.healthBarMarginTop = this.viewportHeight * 0.13; // Margin from the top for larger screens
         }
 
         // Border radius settings
@@ -126,11 +125,35 @@ export default class HealthBarManager {
                 padding: { left: 10, right: 10, top: 30, bottom: 10 },
             }
         ).setOrigin(0.5).setDepth(20);
+
+        // Define margins
+        const marginTop = this.isMobile ? -50 : -10;
+        const marginBottom = this.isMobile ? 210 : 30;
+        const marginRight = this.isMobile ? 123 : 660;
+
+        // Calculate button position
+        const closeButtonWidth = this.isMobile ? 80 : 120;
+        const closeButtonHeight = this.isMobile ? 80 : 120;
+        const closeButtonX = this.viewportWidth - closeButtonWidth - marginRight;
+        const closeButtonY = this.viewportHeight - closeButtonHeight - marginBottom - marginTop;
+
+        // Add the restart button image
+        this.closeButton = this.scene.add.image(closeButtonX, closeButtonY, "restart")
+            .setDisplaySize(closeButtonWidth, closeButtonHeight) 
+            .setInteractive({ useHandCursor: true }) 
+            .setDepth(30)
+            .on("pointerdown", () => this.resetGame()) 
+            .on("pointerover", () => this.closeButton.setTint(0xffff00)) 
+            .on("pointerout", () => this.closeButton.clearTint());
     }
 
     resetHealthBar() {
         this.health = this.maxHealth;
         this.updateHealthBar();
+    }
+
+    resetGame() {
+        this.scene.scene.restart();
     }
 
     getHealth() {
