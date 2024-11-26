@@ -35,7 +35,6 @@ export default class AssetLoader {
     this.scene.load.image("branch1", "game sprites/tree/branch.png"); // left
     this.scene.load.image("branch2", "game sprites/tree/branch 3.png"); // left
     this.scene.load.image("branch3", "game sprites/tree/branch 4.png"); // left
-
     this.scene.load.image("branch4", "game sprites/tree/branch 2.png"); // right
     this.scene.load.image("branch5", "game sprites/tree/branch 5.png"); // right
     this.scene.load.image("branch6", "game sprites/tree/branch 6.png"); // right
