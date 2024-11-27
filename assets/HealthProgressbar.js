@@ -1,7 +1,7 @@
 export default class HealthBarManager {
     constructor(scene) {
         this.scene = scene;
-        this.maxHealth = 1;
+        this.maxHealth = 10;
         this.health = this.maxHealth;
         this.initializeHealthBar();
     }
