@@ -148,27 +148,10 @@ class UserInterfaceManager {
             .setOrigin(0, 0);
         this.setElementDepth(this.scoreText, 2);
 
-        // Restart button (hidden initially)
-        const closeButtonWidth = isMobile ? 80 : 120;
-        const closeButtonHeight = isMobile ? 80 : 120;
-        const marginRight = isMobile ? 123 : 660;
-        const marginBottom = isMobile ? 210 : 30;
-        const closeButtonX = viewportWidth - closeButtonWidth - marginRight;
-        const closeButtonY = viewportHeight - closeButtonHeight - marginBottom;
-        this.closeButton = this.createButtonWithText(
-            closeButtonX,
-            closeButtonY,
-            "restart",
-            " ",
-            closeButtonWidth,
-            closeButtonHeight,
-            50,
-        );
-
-        this.closeButton.button.setVisible(false);
     }
     // Function to create and show the Game Over screen
     showGameOver() {
+        document.getElementById("reset-button").style.display = "flex";
         const viewportWidth = this.scene.scale.width;
         const viewportHeight = this.scene.scale.height;
         const isMobile = viewportWidth <= 768;
@@ -196,9 +179,6 @@ class UserInterfaceManager {
 
         // Final score
         this.showFinalScore(this.scene.score);
-
-        // Show the restart button
-        this.closeButton.button.setVisible(true); // Make the button visible after game over
     }
 
     updateTimer(timer) {

@@ -51,6 +51,11 @@ class GameScene extends Phaser.Scene {
             branch.setCollisionCategory(branchCategory);
             branch.setCollidesWith(playerCategory);
         });
+        document.getElementById("reset-button").onclick = () => {
+            console.log("Reset button clicked");
+            location.reload(); // Reloads the game webpage
+            document.getElementById("game-hud").style.display = "none";
+        };
     }
 
     update(time, delta) {
@@ -106,7 +111,9 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-
+const buttonImgSrc = "./UI/restart.png"; // Path to your reset button image
+const buttonImg = document.getElementById('reset-button-img');
+buttonImg.src = buttonImgSrc;
 window.addEventListener("resize", () => {
     game.scale.resize(window.innerWidth, window.innerHeight);
 });

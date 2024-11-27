@@ -113,6 +113,7 @@ export default class HealthBarManager {
     }
 
     showFinalScore(score) {
+        document.getElementById("reset-button").style.display = "flex";
         this.finalScoreText = this.scene.add.text(
             this.scene.scale.width / 2,
             this.scene.scale.height / 2 + 80,
@@ -125,26 +126,6 @@ export default class HealthBarManager {
                 padding: { left: 10, right: 10, top: 30, bottom: 10 },
             }
         ).setOrigin(0.5).setDepth(20);
-
-        // Define margins
-        const marginTop = this.isMobile ? -50 : -10;
-        const marginBottom = this.isMobile ? 210 : 30;
-        const marginRight = this.isMobile ? 123 : 660;
-
-        // Calculate button position
-        const closeButtonWidth = this.isMobile ? 80 : 120;
-        const closeButtonHeight = this.isMobile ? 80 : 120;
-        const closeButtonX = this.viewportWidth - closeButtonWidth - marginRight;
-        const closeButtonY = this.viewportHeight - closeButtonHeight - marginBottom - marginTop;
-
-        // Add the restart button image
-        this.closeButton = this.scene.add.image(closeButtonX, closeButtonY, "restart")
-            .setDisplaySize(closeButtonWidth, closeButtonHeight) 
-            .setInteractive({ useHandCursor: true }) 
-            .setDepth(30)
-            .on("pointerdown", () => this.resetGame()) 
-            .on("pointerover", () => this.closeButton.setTint(0xffff00)) 
-            .on("pointerout", () => this.closeButton.clearTint());
     }
 
     resetHealthBar() {

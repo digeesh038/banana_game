@@ -2,7 +2,8 @@
     display: none !important;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -10,3 +11,44 @@ body, html {
     height: 100%;
 }
 
+/* Default styles for larger screens (laptops and desktops) */
+#reset-button {
+    display: none;
+    position: absolute;
+    right: 43rem;
+    top: 70vh;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+#reset-button-img {
+    height: 10rem;
+    width: 10rem;
+}
+
+/* Styles for smaller screens (mobile devices) */
+@media (max-width: 768px) {
+    #reset-button {
+        right: 9.2rem; /* Adjust positioning for smaller screens */
+        top: 65vh;   /* Adjust positioning for smaller screens */
+    }
+
+    #reset-button-img {
+        height: 5rem; /* Reduce size for smaller screens */
+        width: 5rem;  /* Reduce size for smaller screens */
+    }
+}
+
+/* Styles for medium screens (tablets) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #reset-button {
+        right: 5rem; /* Adjust positioning for tablets */
+        top: 75vh;   /* Adjust positioning for tablets */
+    }
+
+    #reset-button-img {
+        height: 8rem; /* Slightly smaller size for tablets */
+        width: 8rem;  /* Slightly smaller size for tablets */
+    }
+}
