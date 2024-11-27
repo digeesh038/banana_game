@@ -30,7 +30,7 @@ html {
 /* Styles for smaller screens (mobile devices) */
 @media (max-width: 768px) {
     #reset-button {
-        right: 9.2rem; /* Adjust positioning for smaller screens */
+        right: 9.9rem; /* Adjust positioning for smaller screens */
         top: 65vh;   /* Adjust positioning for smaller screens */
     }
 
